@@ -1,0 +1,49 @@
+[33mcommit fcaf45c582b79d22d37fe48a8aecc486c2fae444[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: zaka-ui <leassafrizakaria@gmail.com>
+Date:   Mon Oct 13 15:37:33 2025 +0200
+
+    feat: add Basic authentication endpoints (signup, login, logout)
+
+[1mdiff --git a/..gitignore.un~ b/..gitignore.un~[m
+[1mindex b975627..52164cc 100644[m
+Binary files a/..gitignore.un~ and b/..gitignore.un~ differ
+[1mdiff --git a/.Readme.md.un~ b/.Readme.md.un~[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f9050f1[m
+Binary files /dev/null and b/.Readme.md.un~ differ
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 3c3629e..8d5bf83 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -1 +1,3 @@[m
+ node_modules[m
+[32m+[m[32m*.swp[m
+[32m+[m[32m*.swo[m
+[1mdiff --git a/.gitignore~ b/.gitignore~[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3c3629e[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore~[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mnode_modules[m
+[1mdiff --git a/Readme.md b/Readme.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..dd5aa9e[m
+[1m--- /dev/null[m
+[1m+++ b/Readme.md[m
+[36m@@ -0,0 +1,15 @@[m
+[32m+[m[32m🎵 DAW (Digital Audio Workstation) API[m
+[32m+[m[32mOverview[m
+[32m+[m[32mA RESTful API backend for a Digital Audio Workstation application that handles audio file management, project organization, and music production workflows. This API provides the foundation for creating, managing, and collaborating on music projects.[m
+[32m+[m
+[32m+[m
+[32m+[m[32m🚀 Features[m
+[32m+[m[32m🎚️ Project Management[m
+[32m+[m[32mCreate, read, update, and delete audio projects[m
+[32m+[m[32mProject metadata (BPM, key, time signature)[m
+[32m+[m[32mVersion control for projects[m
+[32m+[m[32mCollaboration and sharing features[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
