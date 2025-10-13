@@ -1,0 +1,79 @@
+import httpStatusMessages from '../utils/httpStatusMessages.js';
+import redisClient from '../utils/redis.js';
+const AUTH_TYPE = 'Basic';
+
+
+export const LoginMiddleware = (req, res, next) => {
+	const  auth = req.headers.authorization;
+	if (!auth) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+
+	const [authType, data] = auth.split(' ');
+
+	if (authType !== AUTH_TYPE) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+	const decodedData = Buffer.from(data, 'base64').toString();
+	const [email, password] = decodedData.split(':');
+
+	if (!email || !password) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+	req.user = {
+		email, 
+		password
+	};
+
+	next();
+}
+
+
+export const CreateAccoundMiddleware = (req, res, next) => {
+	const {email, password} = req.body;
+	if (!email || !password) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+
+	req.user = {email, password};
+	next();
+}
+
+
+export const AuthMiddleware = async (req, res, next) => {
+	const token = req.headers['x-auth'];
+	if (!token)  {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+	const key = `auth_${token}`;	
+	const userId = await redisClient.get(key);
+	if (!userId) {
+		return res.status(401).jeson({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+	req.user = {
+		userID : userId,
+		key,
+	};
+	next();
+}
+
+
+

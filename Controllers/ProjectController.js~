@@ -1,0 +1,16 @@
+
+
+
+
+class ProjectController {
+	
+	const createProject = (req, res) => {
+		const {name, author, gnere} = req.body;
+		if (!name) {
+			name = 'project_' + id;
+		}
+
+		const path = `${__dirname}/projects/${name}`;
+			
+	}
+}

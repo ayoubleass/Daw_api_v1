@@ -1,0 +1,37 @@
+import httpStatusMessages from './utils/httpStatusMessages.js';
+const AUTH_TYPE = 'Basic';
+
+
+const AuthMiddleware = (req, res, next) => {
+	const  auth = req.hedears['authorization'];
+	const [authType, data] = auth.split(' ');
+
+	if (authType !== AUTH_TYPE) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
+
+	const decodedData = Buffer.from(data, 'base64').toString();
+	const [email, password] = decodedData.split(':');
+
+	if (!email || !password) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		}
+	}
+	req.user = {
+		email, 
+		password
+	};
+
+	next();
+}
+
+
+
+
+export AuthMiddleware;
+
