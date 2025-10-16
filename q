@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import dbClient from '../utils/db.js';
-import { ObjectId } from 'mongodb';
+import {ObjectId} from 'monogodb';
 
 
 class FileController {
@@ -81,5 +81,3 @@ class FileController {
 	}
 
 }
-
-export default FileController;

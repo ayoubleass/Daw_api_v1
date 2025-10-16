@@ -7,8 +7,62 @@ import redisClient from '../utils/redis.js';
 
 class AuthController {
 	/**
-	 * The createAccount method is responsible of creating a new user account.
-	 */
+   * @swagger
+   * /api/auth/signup:
+   *   post:
+   *     summary: Create a new user account
+   *     description: Register a new user with email and password
+   *     tags: [Authentication]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - email
+   *               - password
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 format: email
+   *                 example: "user@example.com"
+   *                 description: "User email address"
+   *               password:
+   *                 type: string
+   *                 format: password
+   *                 example: "mypassword123"
+   *                 description: "User password (will be hashed)"
+   *     responses:
+   *       201:
+   *         description: Account created successfully
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 status:
+   *                   type: number
+   *                   example: 201
+   *                 message:
+   *                   type: string
+   *                   example: "done your account has been created !"
+   *       409:
+   *         description: Email already exists
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 status:
+   *                   type: number
+   *                   example: 409
+   *                 error:
+   *                   type: string
+   *                   example: "Email already exists"
+   *       500:
+   *         description: Internal server error
+   */	
 	static createAccount= async (req, res, next) => {
 		try {
 			const {email, password} = req.user;
@@ -35,8 +89,60 @@ class AuthController {
 	}
 
 	/**
-	 * 
-	 */
+   * @swagger
+   * /api/auth/login:
+   *   post:
+   *     summary: User login
+   *     description: Authenticate user and return access token
+   *     tags: [Authentication]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - email
+   *               - password
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 format: email
+   *                 example: "user@example.com"
+   *                 description: "User email address"
+   *               password:
+   *                 type: string
+   *                 format: password
+   *                 example: "mypassword123"
+   *                 description: "User password"
+   *     responses:
+   *       200:
+   *         description: Login successful
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 token:
+   *                   type: string
+   *                   example: "123e4567-e89b-12d3-a456-426614174000"
+   *                   description: "Authentication token (valid for 24 hours)"
+   *       401:
+   *         description: Unauthorized - invalid credentials
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 status:
+   *                   type: number
+   *                   example: 401
+   *                 error:
+   *                   type: string
+   *                   example: "Unauthorized"
+   *       500:
+   *         description: Internal server error
+   */
 	static login = async (req, res, next) => {
 		try {
 			const {email, password} = req.user;
@@ -65,6 +171,24 @@ class AuthController {
 		}
 
 	}
+
+	/**
+   * @swagger
+   * /api/auth/logout:
+   *   post:
+   *     summary: User logout
+   *     description: Invalidate user authentication token
+   *     tags: [Authentication]
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       204:
+   *         description: Logout successful - no content
+   *       401:
+   *         description: Unauthorized - invalid or missing token
+   *       500:
+   *         description: Internal server error
+   */
 
 	static logout = async (req, res, next) => {
 		try {

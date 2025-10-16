@@ -1,6 +1,8 @@
 import httpStatusMessages from '../utils/httpStatusMessages.js';
 import redisClient from '../utils/redis.js';
 const AUTH_TYPE = 'Basic';
+import { ObjectId } from 'mongodb';
+import dbClient from '../utils/db.js';
 
 
 export const LoginMiddleware = (req, res, next) => {
@@ -41,8 +43,7 @@ export const LoginMiddleware = (req, res, next) => {
 export const CreateAccoundMiddleware = (req, res, next) => {
 	const {email, password} = req.body;
 	if (!email || !password) {
-		return res.status(401).json({
-			status : 401,
+		return res.status(401).json({ status : 401,
 			message : httpStatusMessages[401],
 		});
 	}
@@ -68,12 +69,18 @@ export const AuthMiddleware = async (req, res, next) => {
 			message : httpStatusMessages[401],
 		});
 	}
+	const userIdObject = new ObjectId(userId);
+	const collection = dbClient.collection('users');
+	const user = await collection.findOne({_id: userIdObject});
+	if(!user) {
+		return res.status(401).json({
+			status : 401,
+			message : httpStatusMessages[401],
+		});
+	}
 	req.user = {
-		userID : userId,
+		...user,
 		key,
 	};
 	next();
 }
-
-
-

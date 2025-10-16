@@ -1,12 +1,22 @@
 import express from 'express';
 import AuthController from '../Controllers/AuthController.js';
+import ProjectController from '../Controllers/ProjectController.js';
+import FileController from '../Controllers/FileController.js'
 import {AuthMiddleware, LoginMiddleware, CreateAccoundMiddleware}  from '../Middlewares/AuthMiddleware.js';
 const router = express.Router();
 
-
+/*Authentication*/
 router.get('/login', LoginMiddleware,  AuthController.login);
 router.post('/signUp',  CreateAccoundMiddleware, AuthController.createAccount); 
+router.post('/logout', AuthMiddleware, AuthController.logout);
 
+/*Project Ends*/
+router.post('/projects', AuthMiddleware, ProjectController.create);
+
+
+
+/*AUDIO files*/
+router.post('/projects/:projectId/clip/:clipId/audio', AuthMiddleware, FileController.save);
 
 
 

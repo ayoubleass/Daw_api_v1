@@ -14,9 +14,11 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
-    "mongodb": "^6.20.0",
+    "mongodb": "^6.7.0",
     "redis": "^5.8.3",
     "sha1": "^1.1.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^13.0.0"
   }
 }

@@ -2,12 +2,16 @@ import express from 'express';
 import dbClient from './utils/db.js';
 import router from './router/index.js';
 import redisClient from './utils/redis.js';
+import { swaggerSpec, swaggerUi } from './config/swagger.js';
 const app = express()
 const PORT= process.env.PORT || 3000;
 const redisUrl = 'redis://172.19.252.252:6379';
 const cred = "YXlvdWJAZ21haWwuY29tOjEyMzQ1Njc4OQo=";
 const baseUrl = '/api/v1';
 
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 (async () => {
 	await dbClient.connect();
@@ -30,8 +34,6 @@ const baseUrl = '/api/v1';
 	}
 	
 }) ();
-
-
 
 
 
